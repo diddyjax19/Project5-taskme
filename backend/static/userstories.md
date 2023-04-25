@@ -13,15 +13,10 @@
 4. As a **user** I would like to **quickly determine my logged in/out status** so that I can **decide on my next action**
  - Story points: 3
 
-5. As an **admin** I would like to **refresh access tokens** so that **users can remain logged in for 24h**
- - Story points: 2
-
 ### Epic 2 : Navigation	
-6. As a **user** I would like to **view the nav bar on every page** so that I can **easily navigate through the site**
+5. As a **user** I would like to **view the nav bar on every page** so that I can **easily navigate through the site**
  - Story points: 2
 
-7. As a **user** I would like to **have infinite scroll** so that I can **continue to browse content without navigating to a new page**
- - Story points: 2
 
 ### Epic 3 : Posts
 8. As a **user** I would like to **create a new post** so that I can **share my thoughts & inspiration with others**
