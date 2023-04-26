@@ -6,7 +6,7 @@ from api.users.models import CustomUser
 class Task(models.Model):
     STATUS = (
         ('NEW','NEW'),
-        ('IN PROGRESS','IN PROGRESS'),
+        ('IN PROGRESS', 'IN PROGRESS'),
         ('CLOSED','CLOSED'),
     )
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -20,4 +20,4 @@ class Task(models.Model):
 
     def __str__(self):
         return str(self.name)
-  
+
