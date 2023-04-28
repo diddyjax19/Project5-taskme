@@ -18,4 +18,3 @@ def test_departures_count(self):
 def test_arrivals_count(self):
     a = Project.objects.get(code="AAA")
     self.assertEqual(a.arrivals.count(), 1)
-    
