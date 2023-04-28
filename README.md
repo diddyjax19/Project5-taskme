@@ -1,7 +1,7 @@
 # The Task ME - API
 The TaskME is a Task platform for the modern world. The project manager can create Projects on this platform and assign them to different user.You can view all the tasks and projects and see who dey are assigned to from the Project managers End. In this app you can also see deadlines of the Current Projects ,thier start date of the projects and it end date.Each User is restricted to see the Tasks assigned to them and get more details about each project.This section of the project is the backend API database built to support the ReactJS frontend, and it is powered by the Django Rest Framework.
 
-#### DEPLOYED BACKEND API RENDER [LINK](https://project5-drf-api.onrender.com)
+#### DEPLOYED BACKEND API RENDER [LINK](https://taskit.herokuapp.com/)
 #### DEPLOYED FRONTEND RENDER [LINK - LIVE SITE](https://project5-red-crayon.onrender.com)
 #### DEPLOYED FRONTEND [REPOSITORY](https://github.com/CluelessBiker/project5-red-crayon)
 
