@@ -109,31 +109,15 @@ django-admin startproject project_name .
   - Check that the trailing slash `\` at the end of both links has been removed.
   - Gitpod occasionally updates the browser preview link. Should this occur, the CLIENT_ORIGIN_DEV value shall need to be updated.
 
-8. Created the env.py file, and added the following variables. The value for DATABASE_URL was obtained from the Heroku configvars in the previous step:
-```
-import os
-
-os.environ['CLOUDINARY_URL'] = 'cloudinary://hidden'
-os.environ['DEV'] = '1'
-os.environ['SECRET_KEY'] = 'hidden'
-os.environ['DATABASE_URL'] = 'postgres://hidden'
-```
-### In settings.py: 
-<!-- For reference, refer to: [DRF-API walkthrough settings.py](https://github.com/Code-Institute-Solutions/drf-api/blob/2c0931a2b569704f96c646555b0bee2a4d883f01/drf_api/settings.py) -->
 9. Add the following to INSTALLED_APPS to support the newly installed packages:
 ```
-'cloudinary_storage',
-'django.contrib.staticfiles',
-'cloudinary',
-'rest_framework',
-'django_filters',
-'rest_framework.authtoken',
-'dj_rest_auth',
-'django.contrib.sites',
-'allauth',
-'allauth.account',
-'allauth.socialaccount',
-'dj_rest_auth.registration',
+ 'rest_framework',
+  'rest_framework.authtoken'
+  'home',
+  'api',
+  'api.users',
+  'api.tasks',
+  'api.projects'
 'corsheaders',
 ```
 10. Import the database, the regular expression module & the env.py
@@ -145,11 +129,7 @@ if os.path.exists('env.py')
     import env
 ```
 
-11. Below the import statements, add the following variable for Cloudinary:
-```
-CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': os.environ.ger('CLOUDINARY_URL')
-}
+
 
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinartStorage'
@@ -195,7 +175,7 @@ REST_AUTH_SERIALIZERS = {
 ```
 16. Updated DEBUG variable to:
 ```
-DEBUG = 'DEV' in os.environ
+DEBUG = 'False'
 ```
 17. Updated the DATABASES variable to:
 ```
