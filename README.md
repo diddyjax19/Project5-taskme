@@ -1,8 +1,8 @@
 # The Task ME - API
 The TaskME is a Task platform for the modern world. The project manager can create Projects on this platform and assign them to different user.You can view all the tasks and projects and see who dey are assigned to from the Project managers End. In this app you can also see deadlines of the Current Projects ,thier start date of the projects and it end date.Each User is restricted to see the Tasks assigned to them and get more details about each project.This section of the project is the backend API database built to support the ReactJS frontend, and it is powered by the Django Rest Framework.
 
-#### DEPLOYED BACKEND API RENDER [LINK](https://taskit.herokuapp.com/)
-#### DEPLOYED FRONTEND RENDER [LINK - LIVE SITE]()
+#### DEPLOYED BACKEND API RENDER [LINK](http://tobi.pythonanywhere.com/)
+#### DEPLOYED FRONTEND RENDER [LINK - LIVE SITE](https://taskit-frontend.netlify.app/)
 #### DEPLOYED FRONTEND [REPOSITORY](https://github.com/diddyjax19/Taskit-FrontEnd)
 
 ## Table of Contents
@@ -20,7 +20,7 @@ The TaskME is a Task platform for the modern world. The project manager can crea
   + [Media](#media "Media")
 
 ## User Stories:
-All User Stories have been documented in their own file, the link for which can be found [HERE](backend/static/userstories.md).
+All User Stories have been documented in their own file, the link for which can be found [HERE](static/userstories.md).
 
 I have included links to the [GitHub Issues](https://github.com/CluelessBiker/project5-red-crayon/issues) for this project, as well as the [KANBAN board](https://github.com/users/CluelessBiker/projects/2).
 
@@ -81,7 +81,7 @@ Sqlparse
 Tzdata
 ```
 5. Add the following to INSTALLED_APPS to support the newly installed packages:
-
+```
  'rest_framework',
   'rest_framework.authtoken'
   'home',
@@ -90,71 +90,68 @@ Tzdata
   'api.tasks',
   'api.projects'
 'corsheaders',
+```
 
 6. Import the database, the regular expression module & the env.py
-
+```
 import dj_database_url
 import re
 import os
 if os.path.exists('env.py')
     import env
-``
+```
 7. Added a media Root to the settings.py
-
+```
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-
+```
 8. Added a Static path to the settings.py
 
-# [configuured static file](https://docs.djangoproject.com/en/3.2/howto/static-files/)
+# [Configured static file](https://docs.djangoproject.com/en/3.2/howto/static-files/)
 ```
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 ```
 9. Below INSTALLED_APPS, set site ID:
 
 SITE_ID = 1
 
 
-
 10. Below BASE_DIR, create the REST_FRAMEWORK, and include page pagination to improve app loading times, pagination count, and date/time format:
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
+                    REST_FRAMEWORK = {
+                        'DEFAULT_PERMISSION_CLASSES': [
+                            'rest_framework.permissions.IsAuthenticated',
+                        ],
+                        'DEFAULT_AUTHENTICATION_CLASSES': [
+                            'rest_framework.authentication.TokenAuthentication',
+                        ],
+                        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+                        'PAGE_SIZE': 10
 
-}
+                    }
 
+11. Then added this to the searializers.py
 
-11. Then added:
-
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'project_name.serializers.CurrentUserSerializer'
-}
+                    REST_AUTH_SERIALIZERS = {
+                        'USER_DETAILS_SERIALIZER': 'project_name.serializers.CurrentUserSerializer'
+                    }
 
 12. Updated DEBUG variable to:
 
-DEBUG = 'False'
+            DEBUG = 'False'
 
 13. Updated the DATABASES variable to:
 
-DATABASES = {
-    'default': ({
-       'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    } if 'DEV' in os.environ else dj_database_url.parse(
-        os.environ.get('DATABASE_URL')
-    )
-    )
-}
+                DATABASES = {
+                    'default': ({
+                    'ENGINE': 'django.db.backends.sqlite3',
+                        'NAME': BASE_DIR / 'db.sqlite3',
+                    } if 'DEV' in os.environ else dj_database_url.parse(
+                        os.environ.get('DATABASE_URL')
+                    )
+                    )
+                }
 
 14. Added the pythonanywhere app link to the ALLOWED_HOSTS variable:
 
