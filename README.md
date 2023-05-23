@@ -224,12 +224,12 @@ pip3 freeze --local > requirements.txt
 
 ### Manual Deplyoment In Python Anywhere.
 
-- Uploading your code to PythonAnywhere
+1. Uploading your code to PythonAnywhere
     Assuming your code is already on a code sharing site like GitHub or Bitbucket, you can just clone it from a Bash Console:
 
 ![screenshot 1](screenshots/1.PNG)
 
-- Create a virtualenv and install Django and any other requirements
+2. Create a virtualenv and install Django and any other requirements
     In your Bash console, create a virtualenv, naming it after your project, and choosing the version of Python you want to use:
 
 ![screenshot 2](screenshots/2.PNG)
@@ -237,6 +237,31 @@ pip3 freeze --local > requirements.txt
 
 TIP: if you see an error saying mkvirtualenv: command not found, check out InstallingVirtualenvWrapper.
 
+3. Setting up your Web app and WSGI file
+    At this point, you need to be armed with 3 pieces of information:
+
+  The path to your Django project's top folder -- the folder that contains "manage.py", eg /home/myusername/mysite
+  The name of your project (that's the name of the folder that contains your settings.py), eg mysite
+  The name of your virtualenv, eg mysite-virtualenv
+  Create a Web app with Manual Config
+  Head over to the Web tab and create a new web app, choosing the "Manual Configuration" option and the right version of Python (the same one you used to create your virtualenv).
+
+![screenshot 3](screenshots/3.PNG)
+
+    NOTE: Make sure you choose Manual Configuration, not the "Django" option, that's for new projects only.
+    Enter your virtualenv name
+    Once that's done, enter the name of your virtualenv in the Virtualenv section on the web tab and click OK.
+
+![screenshot 3.1](screenshots/3.1.PNG)
+
+You can just use its short name "mysite-virtualenv", and it will automatically complete to its full path in /home/username/.virtualenvs.
+
+    Optional: enter path to your code
+    Although this isn't necessary for the app to work, you can optionally set your working directory and give yourself a convenient hyperlink to your source files from the web tab.
+
+    Enter the path to your project folder in the Code section on the web tab, eg /home/myusername/mysite in Source code and Working directory
+
+    ![screenshot 3.1](screenshots/3.1.PNG)
 
 ## CREDITS:
 
