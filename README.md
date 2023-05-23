@@ -206,7 +206,7 @@ CSRF_TRUSTED_ORIGINS = [os.environ.get(
 ```
 from corsheaders.defaults import default_headers, default_methods
 ```
-
+```
 ### Final requirements:
 
 22. Migrated the database:
@@ -223,8 +223,10 @@ pip3 freeze --local > requirements.txt
 26. Deployed the branch.
 
 ```
+```
 ### Manual Deplyoment In Python Anywhere:
 
+```
 ```
 1. - Uploading your code to PythonAnywhere
     Assuming your code is already on a code sharing site like GitHub or Bitbucket, you can just clone it from a Bash Console:
@@ -248,6 +250,7 @@ TIP: if you see an error saying mkvirtualenv: command not found, check out Insta
   Create a Web app with Manual Config
   Head over to the Web tab and create a new web app, choosing the "Manual Configuration" option and the right version of Python (the same one you used to create your virtualenv).
 ```
+```
 ![screenshot 3](screenshots/3.PNG)
 ```
     NOTE: Make sure you choose Manual Configuration, not the "Django" option, that's for new projects only.
@@ -263,9 +266,37 @@ You can just use its short name "mysite-virtualenv", and it will automatically c
 
     Enter the path to your project folder in the Code section on the web tab, eg /home/myusername/mysite in Source code and Working directory
 ```
-![screenshot 3.1](screenshots/3.2.PNG)
+![screenshot 3.2](screenshots/3.2.PNG)
+```
+Edit your WSGI file
+One thing that's important here: your Django project (if you're using a recent version of Django) will have a file inside it called wsgi.py. This is not the one you need to change to set things up on PythonAnywhere -- the system here ignores that file.
+
+Instead, the WSGI file to change is the one that has a link inside the "Code" section of the Web tab -- it will have a name something like /var/www/yourusername_pythonanywhere_com_wsgi.py or /var/www/www_yourdomain_com_wsgi.py.
+
+Click on the WSGI file link, and it will take you to an editor where you can change it.
+
+Delete everything except the Django section and then uncomment that section. Your WSGI file should look something like this:
+```
+![screenshot 4](screenshots/4.PNG)
+```
+    * Be sure to substitute the correct path to your project, the folder that contains manage.py, which you noted above.
+    Don't forget to substitute in your own username too!
+    * Also make sure you put the correct value for DJANGO_SETTINGS_MODULE.
+    * This guide assumes you're using a recent version of Django, so leave the old wsgi.WSGIHandler() code commented out, or better still, delete it.
+```  
+Save the file, then go and hit the Reload button for your domain. (You'll find one at the top right of the wsgi file editor, or you can go back to the main web tab)
+```
+```
+Database setup
+    If, like most sites, your site uses a database, you'll need to set that up. Go to the Consoles tab, start a bash console, use cd to navigate to the directory where your Django project's manage.py lives, then run
+```
+```
+![screenshot 5](screenshots/5.PNG)
+```
 ```
 
+```
+```
 
 ## CREDITS:
 
