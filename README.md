@@ -68,13 +68,18 @@ python3 manage.py createsuperuser
 
 ### Frameworks, Libraries & Programs Used:
 - Django
+- Asgiref
+- Django-cors-headers
+- Pytz
+- Sqlparse
 - Django RestFramework
-- Heroku
 - Pillow
 - Django Rest Auth
 - PostgreSQL
 - Cors Headers
 - DrawSQL: An interactive ERD platform that allows you to set up your database tables, & build the connections between them for a visual layout.
+
+
 
 ## Deployment:
 ### Project creation:
