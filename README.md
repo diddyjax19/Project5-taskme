@@ -94,20 +94,7 @@ dj_database_url psycopg2
 gunicorn
 django-cors-headers
 ```
-5. Created the Django project with the following command:
-```
-django-admin startproject project_name .
-```
-6. Navigated back to [Heroku](heroku.com), and under the Settings tab, added the following configvars:
- - Key: SECRET_KEY | Value: hidden
- - Key: CLOUDINARY_URL | Value: cloudinary://hidden
- - Key: DISABLE_COLLECTSTATIC | Value: 1
- - Key: ALLOWED_HOST | Value: api-app-name.herokuapp.com
-7. Add two additional configvars once the ReactApp has been created:
- - Key: CLIENT_ORIGIN | Value: https://react-app-name.herokuapp.com
- - Key: CLIENT_ORIGIN_DEV | Value: https://gitpod-browser-link.ws-eu54.gitpod.io
-  - Check that the trailing slash `\` at the end of both links has been removed.
-  - Gitpod occasionally updates the browser preview link. Should this occur, the CLIENT_ORIGIN_DEV value shall need to be updated.
+
 
 9. Add the following to INSTALLED_APPS to support the newly installed packages:
 ```
@@ -244,8 +231,82 @@ pip3 freeze --local > requirements.txt
 25. Navigated back to heroku, and under the ‘Deploy’ tab, connect the GitHub repository.
 26. Deployed the branch.
 
-### Deploy to Render & ElephantSQL:
-* Due to Heroku revoking their frie tier access, the project has been redeployed using (Render)[https://render.com/] & (ElephantSQL)[https://www.elephantsql.com/] using the following [instructions](https://code-institute-students.github.io/deployment-docs/41-pp5-adv-fe/pp5-adv-fe-drf-01-create-a-database)
+### Deploy to 
+
+Uploading your code to PythonAnywhere
+Assuming your code is already on a code sharing site like GitHub or Bitbucket, you can just clone it from a Bash Console:
+
+![screenshot1](screenshots/1.PNG)
+$ git 
+That's the solution we recommend, but there are a few different methods documented on the uploading and downloading files help page.
+Create a virtualenv and install Django and any other requirements
+In your Bash console, create a virtualenv, naming it after your project, and choosing the version of Python you want to use:
+$ mkvirtualenv --python=/usr/bin/python3.10 mysite-virtualenv
+(mysite-virtualenv)$ pip install django
+# or, if you have a requirements.txt:
+(mysite-virtualenv)$ pip install -r requirements.txt
+Warning: Django may take a long time to install. PythonAnywhere has very fast internet, but the filesystem access can be slow, and Django creates a lot of small files during its installation. Thankfully you only have to do it once!
+TIP: if you see an error saying mkvirtualenv: command not found, check out InstallingVirtualenvWrapper.
+Setting up your Web app and WSGI file
+At this point, you need to be armed with 3 pieces of information:
+1.	The path to your Django project's top folder -- the folder that contains "manage.py", eg /home/myusername/mysite
+2.	The name of your project (that's the name of the folder that contains your settings.py), eg mysite
+3.	The name of your virtualenv, eg mysite-virtualenv
+Create a Web app with Manual Config
+Head over to the Web tab and create a new web app, choosing the "Manual Configuration" option and the right version of Python (the same one you used to create your virtualenv).
+ 
+•	NOTE: Make sure you choose Manual Configuration, not the "Django" option, that's for new projects only.
+Enter your virtualenv name
+Once that's done, enter the name of your virtualenv in the Virtualenv section on the web tab and click OK.
+ 
+You can just use its short name "mysite-virtualenv", and it will automatically complete to its full path in /home/username/.virtualenvs.
+Optional: enter path to your code
+Although this isn't necessary for the app to work, you can optionally set your working directory and give yourself a convenient hyperlink to your source files from the web tab.
+Enter the path to your project folder in the Code section on the web tab, eg /home/myusername/mysite in Source code and Working directory
+ 
+Edit your WSGI file
+One thing that's important here: your Django project (if you're using a recent version of Django) will have a file inside it called wsgi.py. This is not the one you need to change to set things up on PythonAnywhere -- the system here ignores that file.
+Instead, the WSGI file to change is the one that has a link inside the "Code" section of the Web tab -- it will have a name something like /var/www/yourusername_pythonanywhere_com_wsgi.py or /var/www/www_yourdomain_com_wsgi.py.
+Click on the WSGI file link, and it will take you to an editor where you can change it.
+Delete everything except the Django section and then uncomment that section. Your WSGI file should look something like this:
+
+
+
+
+
+
+
+
+# +++++++++++ DJANGO +++++++++++
+
+
+
+
+
+# To use your own Django app use code like this:
+
+import os
+import sys
+
+# assuming your Django settings file is at '/home/myusername/mysite/mysite/settings.py'
+path = '/home/Tobi/task'
+if path not in sys.path:
+    sys.path.insert(0, path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'backend.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+•	Be sure to substitute the correct path to your project, the folder that contains manage.py, which you noted above.
+•	Don't forget to substitute in your own username too!
+•	Also make sure you put the correct value for DJANGO_SETTINGS_MODULE.
+Save the file, then go and hit the Reload button for your domain. (You'll find one at the top right of the wsgi file editor, or you can go back to the main web tab)
+Database setup
+Go to the Consoles tab, start a bash console, use cd to navigate to the directory where your Django project's manage.py lives, then run
+./manage.py migrate
+
+
+
 
 ## CREDITS:
 
