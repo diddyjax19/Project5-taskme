@@ -79,11 +79,9 @@ pytz==2023.3
 asgiref
 Sqlparse
 Tzdata
-
-
-
-9. Add the following to INSTALLED_APPS to support the newly installed packages:
 ```
+5. Add the following to INSTALLED_APPS to support the newly installed packages:
+
  'rest_framework',
   'rest_framework.authtoken'
   'home',
@@ -92,32 +90,37 @@ Tzdata
   'api.tasks',
   'api.projects'
 'corsheaders',
-```
-10. Import the database, the regular expression module & the env.py
-```
+
+6. Import the database, the regular expression module & the env.py
+
 import dj_database_url
 import re
 import os
 if os.path.exists('env.py')
     import env
-```
+``
+7. Added a media Root to the settings.py
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-```
+
+8. Added a Static path to the settings.py
 
 # [configuured static file](https://docs.djangoproject.com/en/3.2/howto/static-files/)
 ```
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 ```
-- Below INSTALLED_APPS, set site ID:
-```
+9. Below INSTALLED_APPS, set site ID:
+
 SITE_ID = 1
-```
-12. Below BASE_DIR, create the REST_FRAMEWORK, and include page pagination to improve app loading times, pagination count, and date/time format:
-```
+
+
+
+10. Below BASE_DIR, create the REST_FRAMEWORK, and include page pagination to improve app loading times, pagination count, and date/time format:
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -130,19 +133,19 @@ REST_FRAMEWORK = {
 
 }
 
-```
-15. Then added:
-```
+
+11. Then added:
+
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'project_name.serializers.CurrentUserSerializer'
 }
-```
-16. Updated DEBUG variable to:
-```
+
+12. Updated DEBUG variable to:
+
 DEBUG = 'False'
-```
-17. Updated the DATABASES variable to:
-```
+
+13. Updated the DATABASES variable to:
+
 DATABASES = {
     'default': ({
        'ENGINE': 'django.db.backends.sqlite3',
@@ -152,12 +155,13 @@ DATABASES = {
     )
     )
 }
-```
-18. Added the pythonanywhere app link to the ALLOWED_HOSTS variable:
-```
+
+14. Added the pythonanywhere app link to the ALLOWED_HOSTS variable:
+
 ALLOWED_HOST = ['tobi.pythonanywhere.com']
-```
-19. Below ALLOWED_HOST, added the CORS_ALLOWED variable as shown in [DRF-API walkthrough](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+DRF+2021_T1/courseware/a6250c9e9b284dbf99e53ac8e8b68d3e/0c9a4768eea44c38b06d6474ad21cf75/?child=first):
+
+
+15. Below ALLOWED_HOST, added the CORS_ALLOWED variable as shown in [DRF-API walkthrough](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+DRF+2021_T1/courseware/a6250c9e9b284dbf99e53ac8e8b68d3e/0c9a4768eea44c38b06d6474ad21cf75/?child=first):
 ```
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
@@ -170,57 +174,56 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
         rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
     ]
 ```
-20. Also added to the top of MIDDLEWARE:
-```
+16. Also added to the top of MIDDLEWARE:
+
 'corsheaders.middleware.CorsMiddleware',
-```
+
 - During a deployment issue, it was suggested by a fellow student, Johan, to add the following lines of code below CORS_ALLOW_CREDENTIALS:
-```
+
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = list(default_headers)
 CORS_ALLOW_METHODS = list(default_methods)
 CSRF_TRUSTED_ORIGINS = [os.environ.get(
     'CLIENT_ORIGIN_DEV', 'CLIENT_ORIGIN',
 )]
-```
-- In addition, Johan also suggested to add the following import statement at the top of the settings.py file:
-```
+
+
+17. In addition, Johan also suggested to add the following import statement at the top of the settings.py file:
+
 from corsheaders.defaults import default_headers, default_methods
-```
-```
+
 ### Final requirements:
 
-22. Migrated the database:
+18. Migrated the database:
 ```
 python3 manage.py makemigrations
 python3 manage.py migrate
 ```
-23. Froze requirements:
+19. Froze requirements:
 ```
 pip3 freeze --local > requirements.txt
 ```
-24. Added, committed & pushed the changes to GitHub
-25. Navigated back to heroku, and under the ‘Deploy’ tab, connect the GitHub repository.
-26. Deployed the branch.
+20. Added, committed & pushed the changes to GitHub
+21. Navigated back to heroku, and under the ‘Deploy’ tab, connect the GitHub repository.
+22. Deployed the branch.
 
-```
-``
 ### Manual Deplyoment In Python Anywhere:
 
-``
 1. - Uploading your code to PythonAnywhere
     Assuming your code is already on a code sharing site like GitHub or Bitbucket, you can just clone it from a Bash Console:
-``
+
 ![screenshot 1](screenshots/1.PNG)
-``
+
 2. Create a virtualenv and install Django and any other requirements
     In your Bash console, create a virtualenv, naming it after your project, and choosing the version of Python you want to use:
-``
+
 ![screenshot 2](screenshots/2.PNG)
-  Warning: Django may take a long time to install. PythonAnywhere has very fast internet, but the filesystem access can be slow, and Django creates a lot of small files during its installation. Thankfully you only have to do it once!
+  Warning: Django may take a long time to install. PythonAnywhere has very fast internet, but the filesystem access can be slow, 
+  and Django creates a lot of small files during its installation. Thankfully you only have to do it once!
 
 TIP: if you see an error saying mkvirtualenv: command not found, check out InstallingVirtualenvWrapper.
-``
+
 3. Setting up your Web app and WSGI file
     At this point, you need to be armed with 3 pieces of information:
 
@@ -229,55 +232,49 @@ TIP: if you see an error saying mkvirtualenv: command not found, check out Insta
   The name of your virtualenv, eg mysite-virtualenv
   Create a Web app with Manual Config
   Head over to the Web tab and create a new web app, choosing the "Manual Configuration" option and the right version of Python (the same one you used to create your virtualenv).
-``
+
 ![screenshot 3](screenshots/3.PNG)
-```
-    NOTE: Make sure you choose Manual Configuration, not the "Django" option, that's for new projects only.
+
+4. NOTE: Make sure you choose Manual Configuration, not the "Django" option, that's for new projects only.
     Enter your virtualenv name
     Once that's done, enter the name of your virtualenv in the Virtualenv section on the web tab and click OK.
-```
-``
+
 ![screenshot 3.1](screenshots/3.1.PNG)
-```
-You can just use its short name "mysite-virtualenv", and it will automatically complete to its full path in /home/username/.virtualenvs.
+
+5. You can just use its short name "mysite-virtualenv", and it will automatically complete to its full path in /home/username/.virtualenvs.
 
     Optional: enter path to your code
     Although this isn't necessary for the app to work, you can optionally set your working directory and give yourself a convenient hyperlink to your source files from the web tab.
 
     Enter the path to your project folder in the Code section on the web tab, eg /home/myusername/mysite in Source code and Working directory
-```
-```
+
 ![screenshot 3.2](screenshots/3.2.PNG)
-```
-Edit your WSGI file
-One thing that's important here: your Django project (if you're using a recent version of Django) will have a file inside it called wsgi.py. This is not the one you need to change to set things up on PythonAnywhere -- the system here ignores that file.
 
-Instead, the WSGI file to change is the one that has a link inside the "Code" section of the Web tab -- it will have a name something like /var/www/yourusername_pythonanywhere_com_wsgi.py or /var/www/www_yourdomain_com_wsgi.py.
+6. Edit your WSGI file
+    One thing that's important here: your Django project (if you're using a recent version of Django) will have a file inside it called wsgi.py. This is not the one you need to change to set things up on PythonAnywhere -- the system here ignores that file.
 
-Click on the WSGI file link, and it will take you to an editor where you can change it.
+    Instead, the WSGI file to change is the one that has a link inside the "Code" section of the Web tab -- it will have a name something like /var/www/yourusername_pythonanywhere_com_wsgi.py or /var/www/www_yourdomain_com_wsgi.py.
 
-Delete everything except the Django section and then uncomment that section. Your WSGI file should look something like this:
-```
-```
+    Click on the WSGI file link, and it will take you to an editor where you can change it.
+
+    Delete everything except the Django section and then uncomment that section. Your WSGI file should look something like this:
+
 ![screenshot 4](screenshots/4.PNG)
-```
-    * Be sure to substitute the correct path to your project, the folder that contains manage.py, which you noted above.
+
+7. Be sure to substitute the correct path to your project, the folder that contains manage.py, which you noted above.
     Don't forget to substitute in your own username too!
     * Also make sure you put the correct value for DJANGO_SETTINGS_MODULE.
     * This guide assumes you're using a recent version of Django, so leave the old wsgi.WSGIHandler() code commented out, or better still, delete it.
-```  
-Save the file, then go and hit the Reload button for your domain. (You'll find one at the top right of the wsgi file editor, or you can go back to the main web tab)
-```
-```
-Database setup
-    If, like most sites, your site uses a database, you'll need to set that up. Go to the Consoles tab, start a bash console, use cd to navigate to the directory where your Django project's manage.py lives, then run
-``
+  
+8. Save the file, then go and hit the Reload button for your domain. (You'll find one at the top right of the wsgi file editor, or you can go back to the main web tab).
+
+9. Database setup
+    If, like most sites, your site uses a database, you'll need to set that up. Go to the Consoles tab, start a bash console, use cd to navigate to the directory where your Django project's manage.py lives, then run.
+
 ![screenshot 5](screenshots/5.PNG)
-```
-```
+
+
 ## Technologies Used:
-```
-```
 ### Main Languages Used:
 - Python
 
@@ -294,6 +291,7 @@ Database setup
 - Cors Headers
 - DrawSQL: An interactive ERD platform that allows you to set up your database tables, & build the connections between them for a visual layout.
 
+
 ## CREDITS:
 
 ### Content:
@@ -305,7 +303,3 @@ Database setup
 ### Media:
 - Default post image Photo by Artem Podrez from [Pexels](https://www.pexels.com/photo/image-of-a-whale-made-of-scrap-materials-7048043/)
 - Default profile image from [Favicon](https://favicon.io/emoji-favicons/alien-monster)
-
-
-### Unfixed Bugs
-- None so far.
