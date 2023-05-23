@@ -45,7 +45,7 @@ All files passed through [PEP8](http://pep8online.com/) without error.
  - Creating Project Date and time
  - Creating Project Status.
 2. - Made sure that each user are not able to see the projects thhatthey are not assigned or are not working on .
-```- Ran migrations file.
+    `- Ran migrations file.
  - deleted `0001_initial.py` files & `__pycache__` from the migration folders in all apps.
  - Ran the migration commands again:
 ```
