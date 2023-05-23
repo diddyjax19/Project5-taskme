@@ -271,7 +271,7 @@ Save the file, then go and hit the Reload button for your domain. (You'll find o
 ```
 Database setup
     If, like most sites, your site uses a database, you'll need to set that up. Go to the Consoles tab, start a bash console, use cd to navigate to the directory where your Django project's manage.py lives, then run
-```
+``
 ![screenshot 5](screenshots/5.PNG)
 ```
 ```
