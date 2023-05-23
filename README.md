@@ -116,10 +116,15 @@ if os.path.exists('env.py')
     import env
 ```
 
-
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+```
+
+# [configuured static file](https://docs.djangoproject.com/en/3.2/howto/static-files/)
+```
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 ```
 - Below INSTALLED_APPS, set site ID:
 ```
