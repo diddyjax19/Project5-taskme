@@ -119,7 +119,7 @@ if os.path.exists('env.py')
 
 
 MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinartStorage'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 ```
 - Below INSTALLED_APPS, set site ID:
 ```
@@ -128,31 +128,17 @@ SITE_ID = 1
 12. Below BASE_DIR, create the REST_FRAMEWORK, and include page pagination to improve app loading times, pagination count, and date/time format:
 ```
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [(
-        'rest_framework.authentication.SessionAuthentication'
-        if 'DEV' in os.environ
-        else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    )],
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DATETIME_FORMAT': '%d %b %Y',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
+
 }
-```
-13. Set the default renderer to JSON:
-```
-if 'DEV' not in os.environ:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        'rest_framework.renderers.JSONRenderer',
-    ]
-```
-14. Beneath that, added the following:
-```
-REST_USE_JWT = True
-JWT_AUTH_SECURE = True
-JWT_AUTH_COOKIE = 'my-app-auth'
-JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
-JWT_AUTH_SAMESITE = 'None'
+
 ```
 15. Then added:
 ```
@@ -176,10 +162,9 @@ DATABASES = {
     )
 }
 ```
-18. Added the Heroku app to the ALLOWED_HOSTS variable:
+18. Added the pythonanywhere app link to the ALLOWED_HOSTS variable:
 ```
-os.environ.get('ALLOWED_HOST'),
-'localhost',
+ALLOWED_HOST = ['tobi.pythonanywhere.com']
 ```
 19. Below ALLOWED_HOST, added the CORS_ALLOWED variable as shown in [DRF-API walkthrough](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+DRF+2021_T1/courseware/a6250c9e9b284dbf99e53ac8e8b68d3e/0c9a4768eea44c38b06d6474ad21cf75/?child=first):
 ```
@@ -213,11 +198,7 @@ from corsheaders.defaults import default_headers, default_methods
 ```
 
 ### Final requirements:
-21. Created a Procfile, & added the following two lines:
-```
-release: python manage.py makemigrations && python manage.py migrate
-web: gunicorn project_name.wsgi
-```
+
 22. Migrated the database:
 ```
 python3 manage.py makemigrations
