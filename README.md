@@ -25,7 +25,7 @@ All User Stories have been documented in their own file, the link for which can 
 I have included links to the [GitHub Issues](https://github.com/CluelessBiker/project5-red-crayon/issues) for this project, as well as the [KANBAN board](https://github.com/users/CluelessBiker/projects/2).
 
 ## Database:
-![SQL Database model](/static/images-readme/readme-models.png)
+![SQL Database model](screenshots/image_2023-04-28_13-03-30.png)
 
 ## Testing:
 ### Validator Testing: 
