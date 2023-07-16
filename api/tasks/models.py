@@ -15,7 +15,7 @@ class Task(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     assignedTo = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    subtasks = models.ManyToManyField('Task', related_name="sub_tasks",blank=True,null=True)
+    subtasks = models.ManyToManyField('Task', related_name="sub_tasks",blank=True)
     state = models.CharField(max_length=11,choices=STATUS,default="NEW")
 
     def __str__(self):
