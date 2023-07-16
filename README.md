@@ -60,8 +60,6 @@ python3 manage.py createsuperuser
  - clearing the browser cookies & cache, as well as relaunching the gitpod workspace resolved this.
 
 
-
-
 ## Deployment:
 ### Project creation:
 1. Create the GitHub repository.
