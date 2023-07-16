@@ -59,6 +59,73 @@ python3 manage.py createsuperuser
  - upon returning to the development version of the app, we were now unable to login or create a new user
  - clearing the browser cookies & cache, as well as relaunching the gitpod workspace resolved this.
 
+### Manual Deplyoment In Python Anywhere:
+
+1. - Uploading your code to PythonAnywhere
+    Assuming your code is already on a code sharing site like GitHub or Bitbucket, you can just clone it from a Bash Console:
+
+![screenshot 1](screenshots/1.PNG)
+
+2. Create a virtualenv and install Django and any other requirements
+    In your Bash console, create a virtualenv, naming it after your project, and choosing the version of Python you want to use:
+
+![screenshot 2](screenshots/2.PNG)
+  Warning: Django may take a long time to install. PythonAnywhere has very fast internet, but the filesystem access can be slow, 
+  and Django creates a lot of small files during its installation. Thankfully you only have to do it once!
+
+TIP: if you see an error saying mkvirtualenv: command not found, check out InstallingVirtualenvWrapper.
+
+3. Setting up your Web app and WSGI file
+    At this point, you need to be armed with 3 pieces of information:
+
+  The path to your Django project's top folder -- the folder that contains "manage.py", eg /home/myusername/mysite
+  The name of your project (that's the name of the folder that contains your settings.py), eg mysite
+  The name of your virtualenv, eg mysite-virtualenv
+  Create a Web app with Manual Config
+  Head over to the Web tab and create a new web app, choosing the "Manual Configuration" option and the right version of Python (the same one you used to create your virtualenv).
+
+![screenshot 3](screenshots/3.PNG)
+
+4. NOTE: Make sure you choose Manual Configuration, not the "Django" option, that's for new projects only.
+    Enter your virtualenv name
+    Once that's done, enter the name of your virtualenv in the Virtualenv section on the web tab and click OK.
+
+![screenshot 3.1](screenshots/3.1.PNG)
+
+5. You can just use its short name "mysite-virtualenv", and it will automatically complete to its full path in /home/username/.virtualenvs.
+
+    Optional: enter path to your code
+    Although this isn't necessary for the app to work, you can optionally set your working directory and give yourself a convenient hyperlink to your source files from the web tab.
+
+    Enter the path to your project folder in the Code section on the web tab, eg /home/myusername/mysite in Source code and Working directory
+
+![screenshot 3.2](screenshots/3.2.PNG)
+
+6. Edit your WSGI file
+    One thing that's important here: your Django project (if you're using a recent version of Django) will have a file inside it called wsgi.py. This is not the one you need to change to set things up on PythonAnywhere -- the system here ignores that file.
+
+    Instead, the WSGI file to change is the one that has a link inside the "Code" section of the Web tab -- it will have a name something like /var/www/yourusername_pythonanywhere_com_wsgi.py or /var/www/www_yourdomain_com_wsgi.py.
+
+    Click on the WSGI file link, and it will take you to an editor where you can change it.
+
+    Delete everything except the Django section and then uncomment that section. Your WSGI file should look something like this:
+
+![screenshot 4](screenshots/4.PNG)
+
+7. Be sure to substitute the correct path to your project, the folder that contains manage.py, which you noted above.
+    Don't forget to substitute in your own username too!
+    * Also make sure you put the correct value for DJANGO_SETTINGS_MODULE.
+    * This guide assumes you're using a recent version of Django, so leave the old wsgi.WSGIHandler() code commented out, or better still, delete it.
+  
+8. Save the file, then go and hit the Reload button for your domain. (You'll find one at the top right of the wsgi file editor, or you can go back to the main web tab).
+
+9. Database setup
+    If, like most sites, your site uses a database, you'll need to set that up. Go to the Consoles tab, start a bash console, use cd to navigate to the directory where your Django project's manage.py lives, then run.
+
+![screenshot 5](screenshots/5.PNG)
+
+
+
 
 ## Deployment:
 ### Project creation:
@@ -209,70 +276,7 @@ This example uses the mysqlclient library, which you can install on your machine
 `pip install mysqlclient`
 ...but you can use any MySQL library you like.
 
-### Manual Deplyoment In Python Anywhere:
 
-1. - Uploading your code to PythonAnywhere
-    Assuming your code is already on a code sharing site like GitHub or Bitbucket, you can just clone it from a Bash Console:
-
-![screenshot 1](screenshots/1.PNG)
-
-2. Create a virtualenv and install Django and any other requirements
-    In your Bash console, create a virtualenv, naming it after your project, and choosing the version of Python you want to use:
-
-![screenshot 2](screenshots/2.PNG)
-  Warning: Django may take a long time to install. PythonAnywhere has very fast internet, but the filesystem access can be slow, 
-  and Django creates a lot of small files during its installation. Thankfully you only have to do it once!
-
-TIP: if you see an error saying mkvirtualenv: command not found, check out InstallingVirtualenvWrapper.
-
-3. Setting up your Web app and WSGI file
-    At this point, you need to be armed with 3 pieces of information:
-
-  The path to your Django project's top folder -- the folder that contains "manage.py", eg /home/myusername/mysite
-  The name of your project (that's the name of the folder that contains your settings.py), eg mysite
-  The name of your virtualenv, eg mysite-virtualenv
-  Create a Web app with Manual Config
-  Head over to the Web tab and create a new web app, choosing the "Manual Configuration" option and the right version of Python (the same one you used to create your virtualenv).
-
-![screenshot 3](screenshots/3.PNG)
-
-4. NOTE: Make sure you choose Manual Configuration, not the "Django" option, that's for new projects only.
-    Enter your virtualenv name
-    Once that's done, enter the name of your virtualenv in the Virtualenv section on the web tab and click OK.
-
-![screenshot 3.1](screenshots/3.1.PNG)
-
-5. You can just use its short name "mysite-virtualenv", and it will automatically complete to its full path in /home/username/.virtualenvs.
-
-    Optional: enter path to your code
-    Although this isn't necessary for the app to work, you can optionally set your working directory and give yourself a convenient hyperlink to your source files from the web tab.
-
-    Enter the path to your project folder in the Code section on the web tab, eg /home/myusername/mysite in Source code and Working directory
-
-![screenshot 3.2](screenshots/3.2.PNG)
-
-6. Edit your WSGI file
-    One thing that's important here: your Django project (if you're using a recent version of Django) will have a file inside it called wsgi.py. This is not the one you need to change to set things up on PythonAnywhere -- the system here ignores that file.
-
-    Instead, the WSGI file to change is the one that has a link inside the "Code" section of the Web tab -- it will have a name something like /var/www/yourusername_pythonanywhere_com_wsgi.py or /var/www/www_yourdomain_com_wsgi.py.
-
-    Click on the WSGI file link, and it will take you to an editor where you can change it.
-
-    Delete everything except the Django section and then uncomment that section. Your WSGI file should look something like this:
-
-![screenshot 4](screenshots/4.PNG)
-
-7. Be sure to substitute the correct path to your project, the folder that contains manage.py, which you noted above.
-    Don't forget to substitute in your own username too!
-    * Also make sure you put the correct value for DJANGO_SETTINGS_MODULE.
-    * This guide assumes you're using a recent version of Django, so leave the old wsgi.WSGIHandler() code commented out, or better still, delete it.
-  
-8. Save the file, then go and hit the Reload button for your domain. (You'll find one at the top right of the wsgi file editor, or you can go back to the main web tab).
-
-9. Database setup
-    If, like most sites, your site uses a database, you'll need to set that up. Go to the Consoles tab, start a bash console, use cd to navigate to the directory where your Django project's manage.py lives, then run.
-
-![screenshot 5](screenshots/5.PNG)
 
 
 ## Technologies Used:
