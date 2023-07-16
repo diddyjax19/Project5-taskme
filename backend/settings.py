@@ -11,8 +11,14 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import environ
+from sshtunnel import SSHTunnelForwarder
 
 from pathlib import Path
+
+# initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,11 +29,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-45)iiqpa_ogd&*2f8ur$i^*d5^5*@ryry8j-0k17%nek2xz4&t'
+# SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['tobi.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['taskit-diddy.pythonanywhere.com', 'localhost','127.0.0.1']
 
 
 # Application definition
@@ -42,13 +49,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-
-    # installed apps
     'home',
     'api',
     'api.users',
     'api.tasks',
-    'api.projects'
+    'api.projects',
+    
 ]
 
 MIDDLEWARE = [
@@ -82,15 +88,45 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+remote_address = env('ADDRESS')
+# connect to a server uisng ssh username and password
+server = SSHTunnelForwarder(
+    'ssh.pythonanywhere.com',
+    ssh_username=env('SSH_USERNAME'),
+    ssh_password=env('SSH_PASSWORD'),
+    remote_bind_address=(remote_address, 3306)
+)
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+server.start()
+
+print(server.local_bind_port)  # show assigned local port
+# work with `SECRET SERVICE` through `server.local_bind_port`.
+
+
+# # SQLite Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 
 DATABASES = {
+    # default database
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    # MySQL database
+    'server_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'PORT': server.local_bind_port,
+        'NAME': 'Diddy$backend',
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+    },
 }
 
 
@@ -143,11 +179,6 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # CORS CONFIG
 CORS_ALLOW_ALL_ORIGINS = True
 
-# CORS_ALLOW_ORIGINS =[
-#     'http://localhost:8000',
-#     'http://heroku.favcenook.com',
-# ]
-
 # HANDLING MEDIA FILES
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -159,8 +190,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
+    ]
 
 }
