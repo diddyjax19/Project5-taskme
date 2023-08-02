@@ -306,5 +306,5 @@ This example uses the mysqlclient library, which you can install on your machine
 - Oisin from Tutor support went above & beyond to assist me in resolving an issue with my database that prevented new posts from being created. The steps we took have been documented in point #5 of the Manual Testing section.
 
 ### Media:
-- Default post image Photo by Artem Podrez from [Pexels](https://www.pexels.com/photo/image-of-a-whale-made-of-scrap-materials-7048043/)
-- Default profile image from [Favicon](https://favicon.io/emoji-favicons/alien-monster)
+- All media was gotten from [Pexels](https://www.pexels.com/)
+
